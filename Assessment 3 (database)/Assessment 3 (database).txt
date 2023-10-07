@@ -1,0 +1,43 @@
+CREATE TABLE bank(branch_id int PRIMARY KEY AUTO_INCREMENT, branch_name varchar(50), branch_city varchar(50) )
+
+CREATE TABLE Account_holder(account_holder_id int PRIMARY KEY AUTO_INCREMENT, account_no int,account_holder_name varchar(50), city varchar(50),contact varchar(50), date_of_account date, account_status boolean, balance int)
+
+
+CREATE TABLE loan(loan_no int PRIMARY KEY AUTO_INCREMENT, branch_id int, account_holder_id int, loan_amount int,loan_type varchar(50),FOREIGN KEY (branch_id) REFERENCES bank(branch_id), FOREIGN KEY (account_holder_id) REFERENCES account_holder(account_holder_id))
+
+
+INSERT INTO `account_holder` (`account_holder_id`, `account_no`, `account_holder_name`, `city`, `contact`, `date_of_account`, `account_status`, `balance`) VALUES (NULL, '1', 'sohan', 'ahmedabad', '7069476530', '2023-10-07', '1', '2000'), (NULL, '2', 'vishal', 'ahmedabad', '12345678', '2023-10-20', '1', '2000');
+
+
+Consider an example where there’s an account holder table where we are
+doing an intra bank transfer i.e. a person holding account A is trying to
+transfer $100 to account B
+
+
+UPDATE account_holder set balance = balance - 500 WHERE account_no = 1
+
+UPDATE account_holder SET balance = balance + 500 WHERE account_no = 2
+
+● Also fetch the details of the account holder who are related from the same
+city
+
+SELECT * FROM `account_holder` WHERE city = 'ahmedabad'
+
+● Write a query to fetch account number and account holder name, whose
+accounts were created after 15th of any month
+
+SELECT account_no,account_no FROM `account_holder` WHERE date_of_account > 15
+
+● Write a query to display the city name and count the branches in that city.
+Give the count of branches an alias name of Count_Branch.
+
+SELECT branch_city AS city, COUNT(*) AS count_branch FROM bank
+
+
+● Write a query to display the account holder’s id, account holder’s name,
+branch id, and loan amount for people who have taken loans. (NOTE : use
+sql join concept to solve the query)
+
+SELECT account_holder.account_holder_id,account_holder.account_holder_name,loan.branch_id,loan.loan_amount FROM account_holder JOIN loan ON account_holder.account_holder_id = loan.account_holder_id
+
+
